@@ -1,0 +1,60 @@
+<html>
+<head>
+    <title>Restaurant Menu App</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Javascript files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" async></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}" async></script>
+
+</head>
+<body>
+    <div class="background-tint background-image"></div>
+    <div class="container">
+        <h1 class="above"><a href="{{url_for('indexRestaurant')}}">Restaurant Menu App</a></h1>
+        <h3 class="above"><u>{{restaurant.name}} Menu</u></h3>
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="above">
+                {% for message in messages %}
+                    <li><strong> {{message}} </strong></li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        {% if not items %}
+            <p class="above">There are currently no menu items added.</p>
+        {% endif %}
+        {% for item in items %}
+            <div class="col-md-4 restaurantContainer">
+                <h4 class="row above">{{item.id}}. {{item.name}}</h4>
+                <p class="row above">
+                    <dl class="dl-horizontal">
+                        <dt>Description:</dt>
+                        <dd>{{item.description}}</dd>
+
+                        <dt>Price:</dt>
+                        <dd>{{item.price}}</dd>
+
+                        <dt>Course:</dt>
+                        <dd>{{item.course}}</dd>
+                    </dl>
+                </p>
+                <div class="row above">
+                    <a class="col-md-12 btn btn-primary editMenuButton" href="{{url_for('editMenuItem', restaurant_id=restaurant.id, menu_id=item.id)}}">Edit</a>
+                    <a class="col-md-12 btn btn-danger deleteMenuButton" href="{{url_for('deleteMenuItem', restaurant_id=restaurant.id, menu_id=item.id)}}">Delete</a>
+                </div>
+            </div>
+        {% endfor %}
+
+        <a class="above addButton btn btn-success" href="{{url_for('addNewMenuItem', restaurant_id=restaurant.id)}}">+ Add a new Item</a>
+    </div>
+</body>
+</html>

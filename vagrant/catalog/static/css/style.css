@@ -1,0 +1,143 @@
+/* Fonts used */
+@font-face {
+  font-family: "Simplifica";
+  src: url(../fonts/SIMPLIFICA-Typeface.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Raleway";
+  src: url(../fonts/Raleway-Regular.ttf) format("truetype");
+}
+
+/* Styling the main elements */
+body {
+  z-index: 2;
+}
+
+h1 a {
+  color: black;
+}
+a:hover{
+  color: white;
+  text-decoration: none;
+}
+
+h1 {
+  text-align: center;
+  font-family: "Simplifica", Verdana, Tahoma;
+  font-size: 80px;
+  z-index: 2;
+}
+
+h2 {
+  font-family: "Raleway", Verdana, Tahoma;
+  z-index: 2;
+}
+
+h3 {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-family: "Raleway", Verdana, Tahoma;
+  z-index: 2;
+}
+h4 {
+  text-align: center;
+}
+p,dl,h4 {
+  color: white;
+}
+
+.container {
+  z-index: 2;
+}
+
+h3:before, h3:after {
+  flex-grow: 1;
+  height: 1px;
+  content: '\a0';
+  background-color: #ddd;
+  position: relative;
+  top: 0.5em;
+}
+
+h3:before {
+  margin-right: 10px;
+}
+
+h3:after {
+  margin-left: 10px;
+}
+
+.restaurantContainer {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  z-index: 2;
+}
+
+.restaurantNameContainer {
+  min-height: 60px;
+  text-align: center;
+  font-size: 40px;
+  font-family: "Simplifica", Verdana, Tahoma;
+  z-index: 2;
+}
+
+.editButton {
+  font-family: "Raleway", Verdana, Tahoma;
+  margin-bottom: 4px;
+  z-index: 2;
+}
+
+.deleteButton {
+  font-family: "Raleway", Verdana, Tahoma;
+  margin-bottom: 4px;
+  z-index: 2;
+}
+
+.addButton {
+  width: 100%;
+  margin: 0;
+  z-index: 2;
+}
+
+.background-image {
+  background-image: url('http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_527bf56961712_1.JPG');
+  background-size: cover;
+  display: block;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  height: 800px;
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: 1;
+}
+
+.background-tint {
+  background-color: rgba(0,0,0,.4);
+  background-blend-mode: multiply;
+}
+
+.above {
+  position: relative;
+  z-index: 2;
+}
+
+
+.editMenuButton {
+  font-family: "Raleway", Verdana, Tahoma;
+  padding: 10px;
+  margin: 4px;
+  z-index: 2;
+  display: block;
+}
+
+.deleteMenuButton {
+  font-family: "Raleway", Verdana, Tahoma;
+  padding: 10px;
+  margin: 4px;
+  z-index: 2;
+  display: block;
+}

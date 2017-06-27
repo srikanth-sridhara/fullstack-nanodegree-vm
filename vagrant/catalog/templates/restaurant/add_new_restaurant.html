@@ -1,0 +1,32 @@
+<html>
+<head>
+    <head>
+        <title>Restaurant Menu App</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+        <!-- Javascript files -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" async></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}" async></script>
+
+    </head>
+</head>
+<body>
+    <div class="container">
+        <h1><a href="{{url_for('indexRestaurant')}}">Restaurant Menu App</a></h1>
+        <h3><u>Add a new Restaurant</u></h3>
+        <form action="{{url_for('addNewRestaurant')}}" method="POST">
+            <p>
+                Name: <input type="text" size="30" name="restaurantname">
+                Address: <input type="text" size="30" name="restaurantaddress">
+                Category: <input type="text" size="30" name="restaurantcategory">
+                <input type="submit" value="Create">
+            </p>
+        </form>
+    </div>
+</body>
+</html>
