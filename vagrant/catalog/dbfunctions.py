@@ -1,23 +1,20 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from db import Base, Restaurant, MenuItem
+from database_setup import Base, Categories, CategoryItems
 
-engine = create_engine('sqlite:///restaurantmenu.db')
+engine = create_engine('sqlite:///inventory.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-### Restaurant db functions ###
-def showRestaurants():
-    return session.query(Restaurant).all()
+### Categories db functions ###
+def getCategories():
+    return session.query(Categories).all()
 
-def newRestaurant(restaurantName, restaurantAddress=None, restaurantCategory=None):
-    restaurantToAdd = Restaurant(
-        name=restaurantName,
-        address=restaurantAddress,
-        category=restaurantCategory)
-    session.add(restaurantToAdd)
+def newCategory(categoryName):
+    categoryToAdd = Categories(name=categoryName)
+    session.add(categoryToAdd)
     session.commit()
 
 def editRestaurant(restaurant_id, restaurantName=None, restaurantAddress=None, restaurantCategory=None):
@@ -40,12 +37,12 @@ def getRestaurant(restaurant_id):
     return session.query(Restaurant).filter_by(id=restaurant_id).one()
 
 
-### Menu Item db functions ###
+### Category Items db functions ###
 def showMenu(restaurant_id):
-    return session.query(MenuItem).filter_by(restaurant_id=restaurant_id).all()
+    return session.query(CategoryItems).filter_by(restaurant_id=restaurant_id).all()
 
 def newMenuItem(restaurant_id, name, course=None, description=None, price=None):
-    newItem = MenuItem(
+    newItem = CategoryItems(
         name=str(name),
         course=str(course),
         description=str(description),
@@ -75,4 +72,4 @@ def deleteMenuItem(menu_id):
     session.commit()
 
 def getMenuItem(menu_id):
-    return session.query(MenuItem).filter_by(id=menu_id).one()
+    return session.query(CategoryItems).filter_by(id=menu_id).one()
