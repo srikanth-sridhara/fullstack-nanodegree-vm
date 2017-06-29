@@ -1,75 +1,74 @@
+""" This module has all the database helper functions for CRUD """
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Categories, CategoryItems
 
-engine = create_engine('sqlite:///inventory.db')
-Base.metadata.bind = engine
+db = create_engine('sqlite:///inventory.db')
+Base.metadata.bind = db
 
-DBSession = sessionmaker(bind=engine)
+DBSession = sessionmaker(bind=db)
 session = DBSession()
 
 ### Categories db functions ###
-def getCategories():
+def get_categories():
     return session.query(Categories).all()
 
-def newCategory(categoryName):
-    categoryToAdd = Categories(name=categoryName)
-    session.add(categoryToAdd)
+def get_category(category_id):
+    return session.query(Categories).filter_by(id=category_id).one()
+
+def new_category(category_obj):
+    category_to_add = Categories(
+        name=category_obj.name,
+        description=category_obj.description,
+        image=category_obj.image)
+    session.add(category_to_add)
     session.commit()
 
-def editRestaurant(restaurant_id, restaurantName=None, restaurantAddress=None, restaurantCategory=None):
-    restaurantToEdit = getRestaurant(restaurant_id)
-    if restaurantName != None:
-        restaurantToEdit.name = restaurantName
-    if restaurantAddress != None:
-        restaurantToEdit.address = restaurantAddress
-    if restaurantCategory != None:
-        restaurantToEdit.category = restaurantCategory
-    session.add(restaurantToEdit)
+def delete_category(category_id):
+    category_to_delete = get_category(category_id)
+    session.delete(category_to_delete)
     session.commit()
 
-def deleteRestaurant(restaurant_id):
-    restaurantToDelete = getRestaurant(restaurant_id)
-    session.delete(restaurantToDelete)
+def edit_category(category_id, category_name=None, category_description=None, category_image=None):
+    category_to_edit = get_category(category_id)
+    if category_name != None:
+        category_to_edit.name = category_name
+    if category_description != None:
+        category_to_edit.description = category_description
+    if category_image != None:
+        category_to_edit.image = category_image
+    session.add(category_to_edit)
     session.commit()
-
-def getRestaurant(restaurant_id):
-    return session.query(Restaurant).filter_by(id=restaurant_id).one()
 
 
 ### Category Items db functions ###
-def showMenu(restaurant_id):
-    return session.query(CategoryItems).filter_by(restaurant_id=restaurant_id).all()
+def get_category_items(category_id):
+    return session.query(CategoryItems).filter_by(category_id=category_id).all()
 
-def newMenuItem(restaurant_id, name, course=None, description=None, price=None):
-    newItem = CategoryItems(
-        name=str(name),
-        course=str(course),
-        description=str(description),
-        price=str(price),
-        restaurant_id=restaurant_id)
-    session.add(newItem)
+def get_category_item(category_item_id):
+    return session.query(CategoryItems).filter_by(id=category_item_id).one()
+
+def new_category_item(category_id, category_item_obj=None):
+    new_item = CategoryItems(
+        title=str(category_item_obj.title),
+        description=str(category_item_obj.description),
+        image=str(category_item_obj.image),
+        category_id=category_id)
+    session.add(new_item)
     session.commit()
 
-def editMenuItem(restaurant_id, menu_id, itemName=None, itemCourse=None, itemDescription=None, itemPrice=None):
-    itemToEdit = getMenuItem(menu_id)
-    if itemName != None:
-        itemToEdit.name = itemName
-    if itemCourse != None:
-        itemToEdit.course = itemCourse
-    if itemDescription != None:
-        itemToEdit.description = itemDescription
-    if itemPrice != None:
-        itemToEdit.price = itemPrice
-    # if restaurant_id != itemToEdit.restaurant_id:
-    #     itemToEdit.restaurant_id = restaurant_id
-    session.add(itemToEdit)
+def delete_category_item(category_item_id):
+    item_to_delete = get_category_item(category_item_id)
+    session.delete(item_to_delete)
     session.commit()
 
-def deleteMenuItem(menu_id):
-    itemToDelete = getMenuItem(menu_id)
-    session.delete(itemToDelete)
+def edit_category_item(category_item_id, category_item_obj=None):
+    item_to_edit = get_category_item(category_item_id)
+    if category_item_obj.title != None:
+        item_to_edit.name = category_item_obj.title
+    if category_item_obj.description != None:
+        item_to_edit.course = category_item_obj.description
+    if category_item_obj.image != None:
+        item_to_edit.description = category_item_obj.image
+    session.add(item_to_edit)
     session.commit()
-
-def getMenuItem(menu_id):
-    return session.query(CategoryItems).filter_by(id=menu_id).one()

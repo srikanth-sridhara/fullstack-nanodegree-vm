@@ -10,14 +10,18 @@ class Categories(Base):
     """ Categories Table """
     __tablename__ = 'categories'
     name = Column(String(80), nullable=False)
+    description = Column(String(250))
+    image = Column(String(250))
     id = Column(Integer, primary_key=True)
 
     @property
     def serialize(self):
         """ This function is used to serialize the table objects """
         return {
-            'name': self.name,
             'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'image': self.image,
         }
 
 class CategoryItems(Base):
@@ -25,7 +29,7 @@ class CategoryItems(Base):
     __tablename__ = 'category_items'
     title = Column(String(80), nullable=False)
     description = Column(String(250))
-    photo = Column(String(250))
+    image = Column(String(250))
 
     id = Column(Integer, primary_key=True)
     category_id = Column(Integer, ForeignKey('categories.id'))
@@ -35,12 +39,12 @@ class CategoryItems(Base):
     def serialize(self):
         """ This function is used to serialize the table objects """
         return {
-            'title': self.title,
-            'description': self.description,
             'id': self.id,
             'category_id': self.category_id,
+            'title': self.title,
+            'description': self.description,
+            'image': self.image,
         }
-
 
 db = create_engine('sqlite:///inventory.db')
 Base.metadata.create_all(db)
