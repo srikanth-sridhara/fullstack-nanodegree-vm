@@ -116,5 +116,5 @@ def edit_category_item(category_item_id, category_item_obj=None):
     session.add(item_to_edit)
     session.commit()
 
-def get_latest_category_items():
-    return session.query(CategoryItems).order_by(desc(CategoryItems.created_on)).all()
+def get_latest_category_items(num_items=10):
+    return session.query(CategoryItems).order_by(desc(CategoryItems.created_on)).limit(num_items).all()

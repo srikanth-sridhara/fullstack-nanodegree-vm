@@ -44,27 +44,6 @@ def unauthorized():
     flash("Unauthorized. Login first")
     return redirect(url_for('index_categories'))
 
-@app.route('/clientOAuth')
-def start():
-    return render_template('clientOAuth.html')
-@app.route('/login')
-def startlogin():
-    return render_template('login.html')
-
-@auth.verify_password
-def verify_password(username_or_token, password):
-    print "Came inside verify password"
-    #Try to see if it's a token first
-    user_id = User.verify_auth_token(username_or_token)
-    if user_id:
-        user = session.query(User).filter_by(id=user_id).one()
-    else:
-        user = session.query(User).filter_by(email=username_or_token).first()
-        if not user or not user.verify_password(password):
-            return False
-    g.user = user
-    return True
-
 @app.route('/oauth/<provider>', methods=['POST'])
 def login_oauth(provider):
     if provider == 'google':
@@ -253,32 +232,6 @@ def login_oauth(provider):
     else:
         return 'Unrecoginized Provider'
 
-# @app.route('/login', methods = ['POST'])
-# def login_native():
-#     username = request.json.get('username')
-#     password = request.json.get('password')
-#     if username is None or password is None:
-#         abort(400) # missing arguments
-#     if session.query(User).filter_by(username = username).first() is not None:
-#         abort(400) # existing user
-#     user = User(username = username)
-#     user.hash_password(password)
-#     session.add(user)
-#     session.commit()
-#     return jsonify({ 'username': user.username }), 201, {'Location': url_for('get_user', id = user.id, _external = True)}
-
-@app.route('/token')
-@auth.login_required
-def get_auth_token():
-    token = g.user.generate_auth_token()
-    return jsonify({'token': token.decode('ascii')})
-
-@app.route('/pr')
-@auth.login_required
-def protected_resource():
-    print "Accessing protected resource"
-    return jsonify({'resource': 'protected'})
-
 @app.route('/logout')
 def logout():
     login_session.clear()
@@ -415,7 +368,7 @@ def delete_category_item(category_id, category_item_id):
         return render_template('category_items/delete_category_item.html', item=item)
 
 def get_latest_category_items():
-    return db.get_latest_category_items()
+    return db.get_latest_category_items(10)
 # #######    Category Items endpoints end     #######
 
 

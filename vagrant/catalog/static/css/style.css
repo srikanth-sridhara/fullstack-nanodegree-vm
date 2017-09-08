@@ -45,9 +45,6 @@ h3 {
 h4 {
   text-align: center;
 }
-/*p,dl,h4 {
-  color: white;
-}*/
 
 .container {
   z-index: 2;
@@ -70,78 +67,138 @@ h3:after {
   margin-left: 10px;
 }
 
-.restaurantContainer {
-  margin-top: 25px;
-  margin-bottom: 25px;
-  z-index: 2;
-}
-
-.restaurantNameContainer {
-  min-height: 60px;
+/*/////////////////////////////////////////*/
+.image-block {
+  border: 3px solid white ;
+  background-color: black;
+  padding: 0px;
+  margin: 0px;
+  height:200px;
   text-align: center;
-  font-size: 40px;
-  font-family: "Simplifica", Verdana, Tahoma;
-  z-index: 2;
+  vertical-align: bottom;
 }
-
-.editButton {
-  font-family: "Raleway", Verdana, Tahoma;
-  margin-bottom: 4px;
-  z-index: 2;
-}
-
-.deleteButton {
-  font-family: "Raleway", Verdana, Tahoma;
-  margin-bottom: 4px;
-  z-index: 2;
-}
-
-.addButton {
+.image-block > p {
   width: 100%;
-  margin: 0;
+  height: 100%;
+  font-weight: normal;
+  font-size: 22px;
+  padding-top: 90px;
+  background-color: rgba(3,3,3,0.0);
+  color: rgba(6,6,6,0.0);
   z-index: 2;
 }
-
-.background-image {
-  /*background-image: url('http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_527bf56961712_1.JPG');
-  background-size: cover;
-  display: block;
-  filter: blur(5px);
-  -webkit-filter: blur(5px);
-  height: 800px;
-  left: 0;
-  position: fixed;
-  right: 0;
-  z-index: 1;*/
+.image-block:hover > p {
+  background-color: rgba(3,3,3,0.8);
+  color: white;
 }
-
-.background-tint {
-  background-color: rgba(0,0,0,.4);
-  background-blend-mode: multiply;
-}
-
-.above {
-  position: relative;
+.image-block > a {
+  font-weight: normal;
+  font-size: 22px;
+  background-color: rgba(3,3,3,0.0);
+  color: rgba(6,6,6,0.0);
   z-index: 2;
 }
-
-
-.editMenuButton {
-  font-family: "Raleway", Verdana, Tahoma;
-  padding: 10px;
-  margin: 4px;
-  z-index: 2;
-  display: block;
+.image-block:hover > a {
+  color: white;
 }
-
-.deleteMenuButton {
-  font-family: "Raleway", Verdana, Tahoma;
-  padding: 10px;
-  margin: 4px;
-  z-index: 2;
-  display: block;
+.category_edit_button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
 }
-
-
+.category_delete_button {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+}
+.latest_item_button {
+  margin-bottom: 5px;
+}
 
 /*/////////////////////////////////////////*/
+.row {
+  margin-right: 0;
+  margin-left: 0;
+}
+.img-wrapper {
+  display: inline-block;
+  overflow: hidden;
+  border: 1px solid gray;
+}
+.img-wrapper img {
+  -webkit-transition: all .5s ease;
+  -moz-transition: all .5s ease;
+  -ms-transition: all .5s ease;
+  -o-transition: all .5s ease;
+  transition: all .5s ease;
+  vertical-align: middle;
+  object-fit: cover;
+  max-height:150px;
+}
+@media (max-width:1200px) and (min-width:760px) {
+  .img-wrapper img {
+    max-height:120px;
+  }
+}
+.img-wrapper img:hover {
+  -webkit-transform:scale(1.5);
+  -moz-transform:scale(1.5);
+  -ms-transform:scale(1.5);
+  -o-transform:scale(1.5);
+  transform:scale(1.5);
+}
+
+.tile {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.image-text-layer {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%)
+}
+
+.image-text {
+  color: black;
+  font-size: 25px;
+  font-family: "Raleway", Verdana, Tahoma;
+  font-weight: bold;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.img-wrapper:hover .tile {
+  opacity: 0.1;
+}
+
+.img-wrapper:hover .image-text-layer {
+  opacity: 1;
+}
+.item_delete_button {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}
+.item_edit_button {
+  position: absolute;
+  right: 35px;
+  bottom: 15px;
+}
