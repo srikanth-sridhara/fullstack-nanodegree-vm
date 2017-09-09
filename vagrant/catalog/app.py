@@ -1,24 +1,33 @@
 """ Main Flask app with routes """
-import random
-import string
 import json
 import requests
 import httplib2
-import inspect
 import database_functions as db
-from flask import Flask, render_template, url_for, request, redirect, flash, jsonify, make_response, g
 from flask import session as login_session
-from flask.ext.httpauth import HTTPBasicAuth
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
-from flask_login import login_user, logout_user, current_user, login_required, LoginManager
-auth = HTTPBasicAuth()
-
-import pprint
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, User, Categories, CategoryItems
 from momentjs import momentjs
+from flask import (
+    Flask,
+    render_template,
+    url_for,
+    request,
+    redirect,
+    flash,
+    jsonify,
+    make_response,
+    g
+)
+from flask_login import (
+    login_user,
+    logout_user,
+    current_user,
+    login_required,
+    LoginManager
+)
 
 dbase = create_engine('sqlite:///inventory.db')
 Base.metadata.bind = dbase
@@ -54,11 +63,13 @@ def login_oauth(provider):
         #STEP 2 - Exchange for a token
         try:
             # Upgrade the authorization code into a credentials object
-            oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
+            oauth_flow = flow_from_clientsecrets(
+                'client_secrets.json', scope='')
             oauth_flow.redirect_uri = 'postmessage'
             credentials = oauth_flow.step2_exchange(auth_code)
         except FlowExchangeError:
-            response_text = json.dumps('Failed to upgrade the authorization code.')
+            response_text = json.dumps(
+                'Failed to upgrade the authorization code.')
             response = make_response(response_text, 401)
             response.headers['Content-Type'] = 'application/json'
             return response
@@ -78,14 +89,16 @@ def login_oauth(provider):
         # Verify that the access token is used for the intended user.
         google_id = credentials.id_token['sub']
         if result['user_id'] != google_id:
-            response_text = json.dumps("Token's user ID doesn't match given user ID.")
+            response_text = json.dumps(
+                "Token's user ID doesn't match given user ID.")
             response = make_response(response_text, 401)
             response.headers['Content-Type'] = 'application/json'
             return response
 
         # Verify that the access token is valid for this app.
         if result['issued_to'] != CLIENT_ID:
-            response_text = json.dumps("Token's client ID does not match app's.")
+            response_text = json.dumps(
+                "Token's client ID does not match app's.")
             response = make_response(response_text, 401)
             response.headers['Content-Type'] = 'application/json'
             return response
@@ -195,7 +208,10 @@ def login_oauth(provider):
         #STEP 3 - Find User or make a new one
         #Get user info
         userinfo_url = "https://graph.facebook.com/me"
-        params = {'access_token': access_token, 'fields':'name,id,email,picture', 'alt':'json'}
+        params = {
+            'access_token': access_token,
+            'fields':'name,id,email,picture',
+            'alt':'json'}
         answer = requests.get(userinfo_url, params=params)
         data = answer.json()
 
@@ -244,7 +260,10 @@ def logout():
 @app.route('/categories/')
 def index_categories():
     categories = db.get_categories()
-    return render_template('categories/categories.html', categories=categories, latest_items=get_latest_category_items())
+    return render_template(
+        'categories/categories.html',
+        categories=categories,
+        latest_items=get_latest_category_items())
 
 
 @app.route('/categories/new/', methods=['GET', 'POST'])
@@ -310,7 +329,10 @@ def delete_category(category_id):
 def index_category_items(category_id):
     category = db.get_category(category_id)
     items = db.get_category_items(category_id)
-    return render_template('category_items/category_items.html', category=category, items=items)
+    return render_template(
+        'category_items/category_items.html',
+        category=category,
+        items=items)
 
 
 @app.route('/category/<int:category_id>/new/', methods=['GET', 'POST'])
@@ -329,10 +351,14 @@ def add_new_category_item(category_id):
             'image': image}
         db.new_category_item(category_id, category_item_obj)
         flash("New category item created!")
-        return redirect(url_for('index_category_items', category_id=category_id))
+        return redirect(
+            url_for('index_category_items',
+            category_id=category_id))
     else:
         category = db.get_category(category_id)
-        return render_template('category_items/add_new_category_item.html', category=category)
+        return render_template(
+            'category_items/add_new_category_item.html',
+            category=category)
 
 
 @app.route('/category/<int:category_id>/<int:category_item_id>/edit', methods=['GET', 'POST'])
@@ -350,10 +376,15 @@ def edit_category_item(category_id, category_item_id):
             'image': image}
         db.edit_category_item(category_item_id, category_item_obj)
         flash("Category item edited!")
-        return redirect(url_for('index_category_items', category_id=category_id))
+        return redirect(
+            url_for('index_category_items',
+            category_id=category_id))
     else:
         item = db.get_category_item(category_item_id)
-        return render_template('category_items/edit_category_item.html', category_id=category_id, item=item)
+        return render_template(
+            'category_items/edit_category_item.html',
+            category_id=category_id,
+            item=item)
 
 
 @app.route('/category/<int:category_id>/<int:category_item_id>/delete', methods=['GET', 'POST'])
@@ -362,10 +393,14 @@ def delete_category_item(category_id, category_item_id):
     if request.method == 'POST':
         db.delete_category_item(category_item_id)
         flash("Category item deleted!")
-        return redirect(url_for('index_category_items', category_id=category_id))
+        return redirect(
+            url_for('index_category_items',
+            category_id=category_id))
     else:
         item = db.get_category_item(category_item_id)
-        return render_template('category_items/delete_category_item.html', item=item)
+        return render_template(
+            'category_items/delete_category_item.html',
+            item=item)
 
 def get_latest_category_items():
     return db.get_latest_category_items(10)
