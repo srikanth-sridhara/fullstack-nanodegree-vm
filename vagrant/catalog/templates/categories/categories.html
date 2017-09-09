@@ -10,7 +10,7 @@
                         <a class="category_edit_button" href="{{url_for('edit_category', category_id=category.id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                         <a class="category_delete_button" href="{{url_for('delete_category', category_id=category.id)}}"><i class="fa fa-times" aria-hidden="true"></i></a>
                     {% endif %}
-                    <p> {{category.id}}. {{category.name}}</p>
+                    <p>{{category.name}}</p>
                 </div>
             {% endfor %}
         </div>
@@ -27,7 +27,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">{{item.id}}. {{item.title}}</h4>
+                                <h4 class="modal-title" id="myModalLabel">{{item.title}}</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
