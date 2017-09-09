@@ -48,6 +48,17 @@ For styling and grid layout, [`bootstrap`](http://getbootstrap.com/) is used. To
 *  Run the following: `python database_populator.py`. This will fill the DB with sample data.
 *  Run the server thus: `python app.py`
 
+## Modules used:
+
+*  flask
+*  flask.ext.httpauth
+*  oauth2client.client (flow_from_clientsecrets and FlowExchangeError)
+*  flask_login (login_user, logout_user, current_user, login_required, LoginManager)
+*  sqlalchemy (create_engine, sessionmaker)
+*  passlib.apps (custom_app_context)
+*  itsdangerous (TimedJSONWebSignatureSerializer, BadSignature, SignatureExpired)
+*  momentjs
+
 ## Image credits:
 
 Sample images were taken from these websites:
@@ -70,3 +81,5 @@ Sample images were taken from these websites:
 *  `instrumentoutfitters.com`
 *  `trumpethub.com`
 *  `wikimedia.org`
+
+`momentjs.py` utility was taken from the Flask Mega-Tutorial by [`Miguel Grinberg`](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xiii-dates-and-times)
