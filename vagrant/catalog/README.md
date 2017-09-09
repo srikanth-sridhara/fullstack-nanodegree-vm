@@ -5,7 +5,7 @@ Created by Srikanth Sridhara on 8th Sep 2017
 This is a website about musical instruments. The initial page shows different categories of musical instruments. When a user clicks on any category, it shows different musical instruments in that category.
 When any musical instrument is clicked, a popup-like Modal opens up with detailed information about the instrument. The initial page also shows a list of the latest category items added.
 
-There is also a User authentication system using Oauth2 providers: Facebook and Google login. When a user is authenticated using Facebook or Google, he/she can add new categories, or edit/delete existing categories. When a user is not logged in, he/she will not be able to add/edit/delete any category/category item, the data can only be viewed.
+There is also a User authentication system using Oauth2 providers: Facebook and Google login. When a user is authenticated using Facebook or Google, he/she can add new categories, or edit/delete existing categories. When a user is not logged in, he/she will not be able to add/edit/delete any category/category item, the data can only be viewed. There is also a user Authorization system which makes sure that logged in users can only edit/delete items that they have created.
 
 For styling and grid layout, [`bootstrap`](http://getbootstrap.com/) is used. To facebook and google icons, [`fontawesome`](http://fontawesome.io/) is used. Two custom fonts are used for text: [`Simplifica`](http://freetypography.com/2014/03/24/free-font-simplifica/) and [`Raleway`](https://fonts.google.com/specimen/Raleway).
 
