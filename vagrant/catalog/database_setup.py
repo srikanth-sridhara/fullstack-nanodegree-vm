@@ -75,6 +75,8 @@ class Categories(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
+    category_item = relationship('CategoryItems', cascade='all, delete-orphan')
+
     @property
     def serialize(self):
         """ This function is used to serialize the table objects """
