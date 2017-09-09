@@ -25,6 +25,8 @@ category_image = [
     "http://images.wisegeek.com/man-in-red-holding-trumpet.jpg"
 ]
 
+category_user = [1, 2, 1, 2, 1]
+
 # Adding dummy data for category items
 category_item_category_id = [
     1, 1, 1, 1, 1, 1,
@@ -95,15 +97,17 @@ category_item_image = [
     "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Yamaha_Bass_tuba_YFB-822.tif/lossy-page1-369px-Yamaha_Bass_tuba_YFB-822.tif.jpg",
 ]
 
+category_item_user = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1]
+
 print "Adding %d categories:" % len(category_name)
 for i in range(len(category_name)):
-    category_obj = {'name': category_name[i], 'description': category_description[i], 'image': category_image[i]}
+    category_obj = {'name': category_name[i], 'description': category_description[i], 'image': category_image[i], 'user_id': category_user[i]}
     db.new_category(category_obj)
 print "All categories added."
 
 print "Adding %d category items:" % len(category_item_title)
 for i in range(len(category_item_title)):
-    category_item_obj = {'title': category_item_title[i], 'description': category_item_description[i], 'image': category_item_image[i]}
+    category_item_obj = {'title': category_item_title[i], 'description': category_item_description[i], 'image': category_item_image[i], 'user_id': category_item_user[i]}
     db.new_category_item(category_item_category_id[i], category_item_obj)
     time.sleep(1)
 print "All category items added."

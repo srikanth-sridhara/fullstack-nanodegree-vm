@@ -63,7 +63,8 @@ def new_category(category_obj):
     category_to_add = Categories(
         name=category_obj['name'],
         description=category_obj['description'],
-        image=category_obj['image'])
+        image=category_obj['image'],
+        user_id=category_obj['user_id'])
     session.add(category_to_add)
     session.commit()
 
@@ -96,7 +97,8 @@ def new_category_item(category_id, category_item_obj=None):
         title=str(category_item_obj['title']),
         description=str(category_item_obj['description']),
         image=str(category_item_obj['image']),
-        category_id=category_id)
+        category_id=category_id,
+        user_id=category_item_obj['user_id'])
     session.add(new_item)
     session.commit()
 

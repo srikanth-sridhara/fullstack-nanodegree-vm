@@ -26,7 +26,7 @@
                 </a>
                 <figcaption class="row">
                     <p>{{item.title}}</p>
-                    {% if current_user.is_authenticated %}
+                    {% if current_user.is_authenticated and current_user.id == item.user_id %}
                         <a class="item_edit_button" href="{{url_for('edit_category_item', category_id=category.id, category_item_id=item.id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                         <a class="item_delete_button" href="{{url_for('delete_category_item', category_id=category.id, category_item_id=item.id)}}"><i class="fa fa-times" aria-hidden="true"></i></a>
                     {% endif %}
@@ -51,7 +51,7 @@
                             </div>
                         </div>
                     </div>
-                    {% if current_user.is_authenticated %}
+                    {% if current_user.is_authenticated and current_user.id == item.user_id %}
                     <div class="modal-footer">
                         <span class="pull-left"><a href="{{url_for('edit_category_item', category_id=category.id, category_item_id=item.id)}}"><button type="button" class="btn btn-primary">Edit</button></a></span>
                         <a href="{{url_for('delete_category_item', category_id=category.id, category_item_id=item.id)}}"><button type="button" class="btn btn-danger">Delete</button></a>

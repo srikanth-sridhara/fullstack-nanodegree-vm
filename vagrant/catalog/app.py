@@ -53,6 +53,10 @@ def unauthorized():
     flash("Unauthorized. Login first")
     return redirect(url_for('index_categories'))
 
+@app.before_request
+def before_request():
+    g.user = current_user
+
 @app.route('/oauth/<provider>', methods=['POST'])
 def login_oauth(provider):
     if provider == 'google':
@@ -278,7 +282,8 @@ def add_new_category():
         category_obj = {
             'name': name,
             'description': description,
-            'image': image}
+            'image': image,
+            'user_id': g.user.id}
         db.new_category(category_obj)
         flash("New category added!")
         return redirect(url_for('index_categories'))
@@ -301,6 +306,9 @@ def edit_category(category_id):
         return redirect(url_for('index_categories'))
     else:
         category = db.get_category(category_id)
+        if g.user.id != category.user_id:
+            flash("You are not authorized to edit this category!")
+            return redirect(url_for('index_categories'))
         return render_template(
             'categories/edit_category.html',
             category_id=category_id,
@@ -316,6 +324,9 @@ def delete_category(category_id):
         return redirect(url_for('index_categories'))
     else:
         category = db.get_category(category_id)
+        if g.user.id != category.user_id:
+            flash("You are not authorized to delete this category!")
+            return redirect(url_for('index_categories'))
         return render_template(
             'categories/delete_category.html',
             category_id=category_id,
@@ -348,7 +359,8 @@ def add_new_category_item(category_id):
         category_item_obj = {
             'title': title,
             'description': description,
-            'image': image}
+            'image': image,
+            'user_id': g.user.id}
         db.new_category_item(category_id, category_item_obj)
         flash("New category item created!")
         return redirect(
@@ -381,6 +393,11 @@ def edit_category_item(category_id, category_item_id):
             category_id=category_id))
     else:
         item = db.get_category_item(category_item_id)
+        if g.user.id != item.user_id:
+            flash("You are not authorized to edit this item!")
+            return redirect(
+                url_for('index_category_items',
+                category_id=category_id))
         return render_template(
             'category_items/edit_category_item.html',
             category_id=category_id,
@@ -398,6 +415,11 @@ def delete_category_item(category_id, category_item_id):
             category_id=category_id))
     else:
         item = db.get_category_item(category_item_id)
+        if g.user.id != item.user_id:
+            flash("You are not authorized to delete this item!")
+            return redirect(
+                url_for('index_category_items',
+                category_id=category_id))
         return render_template(
             'category_items/delete_category_item.html',
             item=item)
